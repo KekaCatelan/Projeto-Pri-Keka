@@ -8,6 +8,8 @@ umaTarefa.addEventListener("click", function (evento) {
     let tarefa = document.getElementById('InputTarefa');
     let textoTarefa = tarefa.value;
 
+   
+
     if (textoTarefa.trim() === "") {
         erro.textContent = "Digite uma nova tarefa."
     } else {
@@ -23,11 +25,16 @@ umaTarefa.addEventListener("click", function (evento) {
         NewText.appendChild(ButtonX);
         ButtonX.textContent = "x";
         ButtonX.classList.add("ButtonX")
+        
+
+       
+
 
         ButtonX.addEventListener("click",function(evento) {
         if (ButtonX.parentNode) {
             NovasTarefas.removeChild(NewText);
             ButtonX.textContent = "";
+           
         }
         });
 
@@ -36,6 +43,7 @@ umaTarefa.addEventListener("click", function (evento) {
           if(NewText.style.textDecoration == "line-through"){
             NewText.style.textDecoration = "none";
             NewText.style.color = "black";
+            
           } else{
             NewText.style.color = "grey";   
             NewText.style.textDecoration = "line-through";
@@ -65,8 +73,27 @@ umaTarefa.addEventListener("click", function (evento) {
         });
 
 
+    let divContainer = document.querySelector (".container")
 
-    }
+    NewText.classList.add("ClassNewText");
+    NewText.setAttribute("draggable", true);
+    NovasTarefas.setAttribute("draggable", true);
+    divContainer.setAttribute("draggable", true);
+
+    // divContainer.appendChild(NewText);
+    // divContainer.appendChild(NovasTarefas);
+
+    let dragging;
+
+    NovasTarefas.addEventListener("dragstart", function(ev){
+      dragging = ev.target.closest(".ClassNewText")
+    })
+  NovasTarefas.addEventListener("dragover", function(ev){
+    ev.stopPropagation();
+    const node = ev.target.closest(".ClassNewText")
+    this.insertBefore(dragging, node)
+  })  
+  }
     
     
     
@@ -77,18 +104,5 @@ umaTarefa.addEventListener("click", function (evento) {
     
     
     
-    // function allowDrop(ev) {
-    //     ev.preventDefault();
-    //   }
-      
-    //   function drag(ev) {
-    //     ev.dataTransfer.setData("tarefa", ev.target.id);
-    //   }
-      
-    //   function drop(ev) {
-    //     ev.preventDefault();
-    //     var data = ev.dataTransfer.getData("tarefa");
-    //     ev.target.appendChild(document.getElementById(data));
-    //   }
-      
+    
 });
